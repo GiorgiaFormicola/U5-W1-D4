@@ -1,9 +1,7 @@
 package GiorgiaFormicola.U5_W1_D4;
 
-import GiorgiaFormicola.U5_W1_D4.entities.User;
-import GiorgiaFormicola.U5_W1_D4.exceptions.EmailNotValidException;
+import GiorgiaFormicola.U5_W1_D4.entities.Building;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidInputException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.UsernameNotValidException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +13,7 @@ public class U5W1D4Application {
     public static void main(String[] args) {
         SpringApplication.run(U5W1D4Application.class, args);
         //TEST USERS CREATION
-        try {
+        /*try {
             User validUser = new User("validUsername", "name", "surname", "valid@email.it");
             System.out.println(validUser);
         } catch (EmailNotValidException | UsernameNotValidException | NotValidInputException e) {
@@ -38,6 +36,19 @@ public class U5W1D4Application {
         try {
             User notValidEmailUser = new User("validUsername", "name", "surname", "not valid@email.it");
         } catch (EmailNotValidException e) {
+            log.error(e.getMessage());
+        }*/
+
+        //TEST BUILDINGS CREATION
+        try {
+            Building validBuilding = new Building("Dancing House", "Jiráskovo nám. 1981/6, 120 00 Nové Město", "Prague");
+        } catch (NotValidInputException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            Building notValidBuilding = new Building("Dancing House", "", "Prague");
+        } catch (NotValidInputException e) {
             log.error(e.getMessage());
         }
 
