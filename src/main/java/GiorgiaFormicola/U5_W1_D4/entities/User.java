@@ -1,8 +1,8 @@
 package GiorgiaFormicola.U5_W1_D4.entities;
 
-import GiorgiaFormicola.U5_W1_D4.exceptions.EmailNotValidException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidEmailException;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidInputException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.UsernameNotValidException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUsernameException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -35,8 +35,8 @@ public class User {
     public User(String username, String name, String surname, String email) {
         if (username.trim().isEmpty() || name.trim().isEmpty() || surname.trim().isEmpty() || email.trim().isEmpty())
             throw new NotValidInputException();
-        if (username.contains(" ") || username.length() > 30) throw new UsernameNotValidException(username);
-        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) throw new EmailNotValidException(email);
+        if (username.contains(" ") || username.length() > 30) throw new NotValidUsernameException(username);
+        if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) throw new NotValidEmailException(email);
         this.username = username;
         this.name = name;
         this.surname = surname;
