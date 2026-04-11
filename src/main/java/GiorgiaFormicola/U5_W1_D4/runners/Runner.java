@@ -1,10 +1,6 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
-import GiorgiaFormicola.U5_W1_D4.entities.User;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidEmailException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidInputException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUsernameException;
+import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +12,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class Runner implements CommandLineRunner {
     private final UsersService usersService;
+    private final BuildingsService buildingsService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -199,10 +196,10 @@ public class Runner implements CommandLineRunner {
         }*/
 
         // --- Test findByEmailAndDelete
-        try {
-            User validUser = new User("validUsername", "name", "surname", "valid@email.it");
-            System.out.println(validUser);
-        } catch (NotValidEmailException | NotValidUsernameException | NotValidInputException e) {
+        /*try {
+            User userToSave = new User("marioRossi", "Mario", "Rossi", "mariorossi@gmail.com");
+            usersService.saveNewUser(userToSave);
+        } catch (NotValidUserException e) {
             log.error(e.getMessage());
         }
 
@@ -212,6 +209,78 @@ public class Runner implements CommandLineRunner {
             System.out.println(userFromDB);
         } catch (NotFoundException e) {
             log.error(e.getMessage());
+        }*/
+
+        //TEST BUILDINGS SERVICE
+        // --- Test saveNewBuilding
+        /*try {
+            Building buildingToSave = new Building("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            buildingsService.saveNewBuilding(buildingToSave);
+        } catch (NotValidBuildingException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findById
+        /*try {
+            Building buildingFromDB = buildingsService.findById("5f1761f3-a048-4f21-abfd-f27b86f7726a");
+            System.out.println(buildingFromDB);
+            Building buildingNotFromDB = buildingsService.findById("5f1761f3-a048-4f21-abfd-f27b86f7726b");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByNameAddressCity
+        /*try {
+            Building buildingFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            System.out.println(buildingFromDB);
+            Building buildingNotFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Milano");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByIdAndUpdate
+        /*try {
+            Building updatedBuilding = new Building("Palazzo dei congressi", "Piazza John Kennedy, 1", "Milano");
+            buildingsService.findByIdAndUpdate("5f1761f3-a048-4f21-abfd-f27b86f7726a", updatedBuilding);
+            Building buildingFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Milano");
+            System.out.println(buildingFromDB);
+            Building buildingNotFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByNameAddressCityAndUpdate
+        /*try {
+            Building updatedBuilding = new Building("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            buildingsService.findByNameAddressCityAndUpdate("Palazzo dei congressi", "Piazza John Kennedy, 1", "Milano", updatedBuilding);
+            Building buildingFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            System.out.println(buildingFromDB);
+            Building buildingNotFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Milano");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByIdAndDelete
+        /*try {
+            buildingsService.findByIdAndDelete("5f1761f3-a048-4f21-abfd-f27b86f7726a");
+            Building buildingNotFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByNameAddressCityAndDelete
+        /*try {
+            Building buildingToSave = new Building("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            buildingsService.saveNewBuilding(buildingToSave);
+        } catch (NotValidBuildingException e) {
+            log.error(e.getMessage());
         }
+
+        try {
+            buildingsService.findByNameAddressCityAndDelete("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            Building buildingNotFromDB = buildingsService.findByNameAddressCity("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
     }
 }
