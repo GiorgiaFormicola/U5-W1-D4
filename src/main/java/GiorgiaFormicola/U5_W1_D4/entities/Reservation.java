@@ -36,5 +36,4 @@ public class Reservation {
         this.workspace = workspace;
         this.user = user;
     }
-
 }
