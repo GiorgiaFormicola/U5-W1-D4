@@ -1,11 +1,17 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
+import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
+import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
 import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
+import GiorgiaFormicola.U5_W1_D4.services.WorkspacesService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @Slf4j
@@ -13,6 +19,7 @@ import org.springframework.stereotype.Component;
 public class Runner implements CommandLineRunner {
     private final UsersService usersService;
     private final BuildingsService buildingsService;
+    private final WorkspacesService workspacesService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -282,5 +289,164 @@ public class Runner implements CommandLineRunner {
         } catch (NotFoundException e) {
             log.error(e.getMessage());
         }*/
+
+        //TEST WORKSPACES SERVICE
+        // --- Test saveNewWorkspace
+        /*try {
+            Building buildingToSave = new Building("Palazzo dei congressi", "Piazza John Kennedy, 1", "Roma");
+            buildingsService.saveNewBuilding(buildingToSave);
+        } catch (NotValidBuildingException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            workspacesService.saveNewWorkspace("Amazing workspace", WorkspaceType.CONFERENCE_ROOM, 100, "cf867337-e9f5-492f-9424-7182c1570ec6");
+        } catch (NotFoundException | NotValidInputException | NotValidOccupantsException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            workspacesService.saveNewWorkspace(" ", WorkspaceType.CONFERENCE_ROOM, 100, "cf867337-e9f5-492f-9424-7182c1570ec6");
+        } catch (NotFoundException | NotValidInputException | NotValidOccupantsException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            workspacesService.saveNewWorkspace("Amazing workspace", WorkspaceType.CONFERENCE_ROOM, -10, "cf867337-e9f5-492f-9424-7182c1570ec6");
+        } catch (NotFoundException | NotValidInputException | NotValidOccupantsException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            workspacesService.saveNewWorkspace("Amazing workspace", WorkspaceType.CONFERENCE_ROOM, 100, "cf867337-e9f5-492f-9424-7182c1570ec7");
+        } catch (NotFoundException | NotValidInputException | NotValidOccupantsException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findById
+        /*try {
+            Workspace workspaceInDB = workspacesService.findById("c3480dbb-c4fb-4ce4-8b60-f7f8acd252a1");
+            System.out.println(workspaceInDB);
+            Workspace workspaceNotInDB = workspacesService.findById("c3480dbb-c4fb-4ce4-8b60-f7f8acd252a3");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByIdAndUpdate
+        /*try {
+            Building buildingFromDB = buildingsService.findById("cf867337-e9f5-492f-9424-7182c1570ec6");
+            Workspace updatedWorkspace = new Workspace("Fabulous workspace", WorkspaceType.PRIVATE, 10, buildingFromDB);
+            workspacesService.findByIdAndUpdate("c3480dbb-c4fb-4ce4-8b60-f7f8acd252a1", updatedWorkspace);
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test findByIdAndDelete
+        /*try {
+            workspacesService.findByIdAndDelete("c3480dbb-c4fb-4ce4-8b60-f7f8acd252a1");
+            Workspace workspaceNotInDB = workspacesService.findById("c3480dbb-c4fb-4ce4-8b60-f7f8acd252a1");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test filterByTypeAndCity
+        /*try {
+            Building buildingToSave1 = new Building("Torre Hadid", "Piazza Tre Torri, 1", "Milano");
+            Building buildingToSave2 = new Building("Auditorium Parco della Musica", "Via Pietro de Coubertin, 30", "Roma");
+            buildingsService.saveNewBuilding(buildingToSave1);
+            buildingsService.saveNewBuilding(buildingToSave2);
+        } catch (NotValidBuildingException e) {
+            log.error(e.getMessage());
+        }*/
+
+        /*
+        workspacesService.saveNewWorkspace("Workspace1", WorkspaceType.PRIVATE, 30, "76d66d70-8d89-42da-a8f7-cc6f1178484c"); //ROMA
+        workspacesService.saveNewWorkspace("Workspace2", WorkspaceType.PRIVATE, 30, "cf867337-e9f5-492f-9424-7182c1570ec6"); //ROMA
+        workspacesService.saveNewWorkspace("Workspace3", WorkspaceType.CONFERENCE_ROOM, 30, "cf867337-e9f5-492f-9424-7182c1570ec6"); //ROMA
+        workspacesService.saveNewWorkspace("Workspace4", WorkspaceType.PRIVATE, 10, "91da4c27-dc0b-4d2d-90fc-fd4ffc1f4bef"); //MILANO
+        workspacesService.saveNewWorkspace("Workspace5", WorkspaceType.OPEN_SPACE, 60, "91da4c27-dc0b-4d2d-90fc-fd4ffc1f4bef"); //MILANO
+        */
+
+        /*try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndCity(WorkspaceType.PRIVATE, "Roma");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndCity(WorkspaceType.PRIVATE, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndCity(WorkspaceType.CONFERENCE_ROOM, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndCity(WorkspaceType.CONFERENCE_ROOM, "Firenze");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test filterByCity
+        /*try {
+            List<Workspace> workspacesFound = workspacesService.filterByCity("Roma");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByCity("Firenze");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test filterByMaximumOccupantsAndCity
+        /*try {
+            List<Workspace> workspacesFound = workspacesService.filterByMaximumOccupantsAndCity(5, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByMaximumOccupantsAndCity(60, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByMaximumOccupantsAndCity(100, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // --- Test filterByTypeAndMaximumOccupantsAndCity
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCity(WorkspaceType.OPEN_SPACE, 60, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCity(WorkspaceType.CONFERENCE_ROOM, 60, "Milano");
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+
+
     }
 }

@@ -32,6 +32,7 @@ public class Workspace {
 
     @ManyToOne
     @JoinColumn(name = "building_id", nullable = false)
+    @Setter(AccessLevel.NONE)
     private Building building;
 
     public Workspace(String description, WorkspaceType type, int maximumOccupants, Building building) {
