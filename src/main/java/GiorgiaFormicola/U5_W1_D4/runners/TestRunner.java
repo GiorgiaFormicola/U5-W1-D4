@@ -1,5 +1,8 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
+import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
+import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
 import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
 import GiorgiaFormicola.U5_W1_D4.services.ReservationsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
@@ -9,10 +12,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Component
 @Slf4j
 @AllArgsConstructor
-public class Runner implements CommandLineRunner {
+public class TestRunner implements CommandLineRunner {
     private final UsersService usersService;
     private final BuildingsService buildingsService;
     private final WorkspacesService workspacesService;
@@ -362,6 +368,7 @@ public class Runner implements CommandLineRunner {
         workspacesService.saveNewWorkspace("Workspace3", WorkspaceType.CONFERENCE_ROOM, 30, "cf867337-e9f5-492f-9424-7182c1570ec6"); //ROMA
         workspacesService.saveNewWorkspace("Workspace4", WorkspaceType.PRIVATE, 10, "91da4c27-dc0b-4d2d-90fc-fd4ffc1f4bef"); //MILANO
         workspacesService.saveNewWorkspace("Workspace5", WorkspaceType.OPEN_SPACE, 60, "91da4c27-dc0b-4d2d-90fc-fd4ffc1f4bef"); //MILANO
+        workspacesService.saveNewWorkspace("Workspace6", WorkspaceType.PRIVATE, 32, "91da4c27-dc0b-4d2d-90fc-fd4ffc1f4bef"); //MILANO
         */
 
         /*try {
@@ -520,6 +527,20 @@ public class Runner implements CommandLineRunner {
             log.error(e.getMessage());
         }*/
 
+        //TEST LAST METHOD ADDED FILTERING WORKSPACES BY DATE AVAILABILITY
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.PRIVATE, 5, "Milano", LocalDate.now());
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
 
+        try {
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.PRIVATE, 5, "Roma", LocalDate.now());
+            workspacesFound.forEach(System.out::println);
+        } catch (NoWorkspaceFoundException e) {
+            log.error(e.getMessage());
+        }
+        
     }
 }

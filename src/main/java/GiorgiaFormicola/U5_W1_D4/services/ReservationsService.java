@@ -25,9 +25,9 @@ public class ReservationsService {
 
     public void saveNewReservation(LocalDate date, String workspaceId, String userId) {
         if (reservationsRepository.existsByUser_IdAndDate(UUID.fromString(userId), date))
-            throw new NotValidReservationException("We,re sorry, you have already reserved another workspace for the provided date (" + date + ").");
+            throw new NotValidReservationException("We're sorry, you have already reserved another workspace for the provided date (" + date + ").");
         if (reservationsRepository.existsByWorkspace_IdAndDate(UUID.fromString(workspaceId), date))
-            throw new NotValidReservationException("We,re sorry, the desired workspace is already reserved for the provided date (" + date + ").");
+            throw new NotValidReservationException("We're sorry, the desired workspace is already reserved for the provided date (" + date + ").");
         Workspace workspaceFound = workspacesService.findById(workspaceId);
         User userFound = usersService.findById(userId);
         Reservation newReservation = new Reservation(date, workspaceFound, userFound);
@@ -44,11 +44,11 @@ public class ReservationsService {
         if (found.getDate().equals(updatedReservation.getDate()) && found.getWorkspace().getId().equals(updatedReservation.getWorkspace().getId()))
             throw new NotValidUpdateException("reservation");
         if (reservationsRepository.existsByUser_IdAndDate(updatedReservation.getUser().getId(), updatedReservation.getDate()) && !updatedReservation.getDate().equals(found.getDate()))
-            throw new NotValidReservationException("We,re sorry, you have already reserved another workspace for the provided date (" + updatedReservation.getDate() + ").");
+            throw new NotValidReservationException("We're sorry, you have already reserved another workspace for the provided date (" + updatedReservation.getDate() + ").");
         if (reservationsRepository.existsByWorkspace_IdAndDate(updatedReservation.getWorkspace().getId(), updatedReservation.getDate()) && !updatedReservation.getDate().equals(found.getDate()))
-            throw new NotValidReservationException("We,re sorry, the desired workspace is already reserved for the provided date (" + updatedReservation.getDate() + ").");
+            throw new NotValidReservationException("We're sorry, the desired workspace is already reserved for the provided date (" + updatedReservation.getDate() + ").");
         if (reservationsRepository.existsByWorkspace_IdAndDate(updatedReservation.getWorkspace().getId(), updatedReservation.getDate()) && !updatedReservation.getWorkspace().getId().equals(found.getWorkspace().getId()))
-            throw new NotValidReservationException("We,re sorry, the desired workspace is already reserved for the provided date (" + updatedReservation.getDate() + ").");
+            throw new NotValidReservationException("We're sorry, the desired workspace is already reserved for the provided date (" + updatedReservation.getDate() + ").");
         found.setDate(updatedReservation.getDate());
         found.setWorkspace(updatedReservation.getWorkspace());
         this.reservationsRepository.save(found);
