@@ -1,11 +1,5 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
-import GiorgiaFormicola.U5_W1_D4.entities.User;
-import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
-import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidReservationException;
 import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
 import GiorgiaFormicola.U5_W1_D4.services.ReservationsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
@@ -14,9 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -546,7 +537,7 @@ public class TestRunner implements CommandLineRunner {
         }*/
 
         //TESTS USER BASIC INTERACTION WITH RESERVATIONS
-        try {
+        /*try {
             //User logs in by username
             User user = usersService.findByUsername("marioRossi");
             log.info("USER LOGGED: " + user);
@@ -566,6 +557,6 @@ public class TestRunner implements CommandLineRunner {
             reservationsService.saveNewReservation(searchDate, workspaceChosen.getId().toString(), user.getId().toString());
         } catch (NotFoundException | NoWorkspaceFoundException | NotValidReservationException e) {
             log.error(e.getMessage());
-        }
+        }*/
     }
 }
