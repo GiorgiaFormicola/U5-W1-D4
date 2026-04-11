@@ -1,8 +1,11 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
+import GiorgiaFormicola.U5_W1_D4.entities.User;
 import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
 import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidReservationException;
 import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
 import GiorgiaFormicola.U5_W1_D4.services.ReservationsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
@@ -528,7 +531,7 @@ public class TestRunner implements CommandLineRunner {
         }*/
 
         //TEST LAST METHOD ADDED FILTERING WORKSPACES BY DATE AVAILABILITY
-        try {
+        /*try {
             List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.PRIVATE, 5, "Milano", LocalDate.now());
             workspacesFound.forEach(System.out::println);
         } catch (NoWorkspaceFoundException e) {
@@ -540,7 +543,29 @@ public class TestRunner implements CommandLineRunner {
             workspacesFound.forEach(System.out::println);
         } catch (NoWorkspaceFoundException e) {
             log.error(e.getMessage());
+        }*/
+
+        //TESTS USER BASIC INTERACTION WITH RESERVATIONS
+        try {
+            //User logs in by username
+            User user = usersService.findByUsername("marioRossi");
+            log.info("USER LOGGED: " + user);
+
+            //User searches a workspace
+            LocalDate searchDate = LocalDate.now().plusWeeks(1);
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.PRIVATE, 5, "Milano", searchDate);
+            ;
+            log.info("WORKSPACES FOUND: " + workspacesFound.size());
+            workspacesFound.forEach(workspace -> log.info(String.valueOf(workspace)));
+
+            //User chooses the workspace
+            Workspace workspaceChosen = workspacesFound.getFirst();
+            log.info("WORKSPACE CHOOSEN: " + workspaceChosen);
+
+            //User makes the reservation
+            reservationsService.saveNewReservation(searchDate, workspaceChosen.getId().toString(), user.getId().toString());
+        } catch (NotFoundException | NoWorkspaceFoundException | NotValidReservationException e) {
+            log.error(e.getMessage());
         }
-        
     }
 }
