@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "reservations", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id"})})
+@Table(name = "reservations", uniqueConstraints = {@UniqueConstraint(columnNames = {"date", "user_id"}), @UniqueConstraint(columnNames = {"date", "workspace_id"})})
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,6 +27,7 @@ public class Reservation {
     private Workspace workspace;
 
     @ManyToOne
+    @Setter(AccessLevel.NONE)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

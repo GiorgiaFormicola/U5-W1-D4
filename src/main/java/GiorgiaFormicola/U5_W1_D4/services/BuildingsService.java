@@ -3,6 +3,7 @@ package GiorgiaFormicola.U5_W1_D4.services;
 import GiorgiaFormicola.U5_W1_D4.entities.Building;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidBuildingException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUpdateException;
 import GiorgiaFormicola.U5_W1_D4.repositories.BuildingsRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +36,8 @@ public class BuildingsService {
 
     public void findByIdAndUpdate(String buildingId, Building updatedBuilding) {
         Building found = this.findById(buildingId);
+        if (found.getName().equals(updatedBuilding.getName()) && found.getAddress().equals(updatedBuilding.getAddress()) && found.getCity().equals(updatedBuilding.getCity()))
+            throw new NotValidUpdateException("building");
         if (this.buildingsRepository.existsByNameAndAddressAndCity(updatedBuilding.getName(), updatedBuilding.getAddress(), updatedBuilding.getCity())
                 && !updatedBuilding.getName().equals(found.getName()) && !updatedBuilding.getAddress().equals(found.getAddress()) && !updatedBuilding.getCity().equals(found.getCity()))
             throw new NotValidBuildingException(updatedBuilding);
@@ -47,6 +50,8 @@ public class BuildingsService {
 
     public void findByNameAddressCityAndUpdate(String name, String address, String city, Building updatedBuilding) {
         Building found = this.findByNameAddressCity(name, address, city);
+        if (found.getName().equals(updatedBuilding.getName()) && found.getAddress().equals(updatedBuilding.getAddress()) && found.getCity().equals(updatedBuilding.getCity()))
+            throw new NotValidUpdateException("building");
         if (this.buildingsRepository.existsByNameAndAddressAndCity(updatedBuilding.getName(), updatedBuilding.getAddress(), updatedBuilding.getCity())
                 && !updatedBuilding.getName().equals(found.getName()) && !updatedBuilding.getAddress().equals(found.getAddress()) && !updatedBuilding.getCity().equals(found.getCity()))
             throw new NotValidBuildingException(updatedBuilding);

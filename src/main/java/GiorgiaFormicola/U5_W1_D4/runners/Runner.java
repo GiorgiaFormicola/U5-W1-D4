@@ -1,17 +1,13 @@
 package GiorgiaFormicola.U5_W1_D4.runners;
 
-import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
-import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
-import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
 import GiorgiaFormicola.U5_W1_D4.services.BuildingsService;
+import GiorgiaFormicola.U5_W1_D4.services.ReservationsService;
 import GiorgiaFormicola.U5_W1_D4.services.UsersService;
 import GiorgiaFormicola.U5_W1_D4.services.WorkspacesService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @Slf4j
@@ -20,6 +16,7 @@ public class Runner implements CommandLineRunner {
     private final UsersService usersService;
     private final BuildingsService buildingsService;
     private final WorkspacesService workspacesService;
+    private final ReservationsService reservationsService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -433,7 +430,7 @@ public class Runner implements CommandLineRunner {
         }*/
 
         // --- Test filterByTypeAndMaximumOccupantsAndCity
-        try {
+        /*try {
             List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCity(WorkspaceType.OPEN_SPACE, 60, "Milano");
             workspacesFound.forEach(System.out::println);
         } catch (NoWorkspaceFoundException e) {
@@ -445,7 +442,83 @@ public class Runner implements CommandLineRunner {
             workspacesFound.forEach(System.out::println);
         } catch (NoWorkspaceFoundException e) {
             log.error(e.getMessage());
+        }*/
+
+        //TEST RESERVATIONS SERVICE
+        // --- Test saveNewReservation
+        /*try {
+            User userToSave1 = new User("marioRossi", "Mario", "Rossi", "mariorossi@gmail.com");
+            User userToSave2 = new User("paoloVerdi", "Paolo", "Verdi", "paoloverdi@gmail.com");
+            usersService.saveNewUser(userToSave1);
+            usersService.saveNewUser(userToSave2);
+        } catch (NotValidUserException e) {
+            log.error(e.getMessage());
         }
+
+        try {
+            reservationsService.saveNewReservation(LocalDate.now(), "88490bb2-e036-4da0-8246-333c09880da3", "cb609645-0e9a-4c2f-abeb-796d32807a90");
+        } catch (NotFoundException | NotValidReservationException e) {
+            log.error(e.getMessage());
+        }
+
+        try {
+            reservationsService.saveNewReservation(LocalDate.now(), "88490bb2-e036-4da0-8246-333c09880da3", "3c2f3bcc-984c-403e-a486-32ad046e4fcb");
+        } catch (NotFoundException | NotValidReservationException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // -- Test findById
+        /*try {
+            Reservation reservationFromDB = reservationsService.findById("dcca5f46-8bbe-4249-a306-3641c0ba16f9");
+            System.out.println(reservationFromDB);
+            Reservation reservationNotFromDB = reservationsService.findById("dcca5f46-8bbe-4249-a306-3641c0ba16f6");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
+
+        // -- Test findByIdAndUpdate
+        /*Workspace workspace1FromDB = workspacesService.findById("88490bb2-e036-4da0-8246-333c09880da3");
+        Workspace workspace2FromDB = workspacesService.findById("b607b34e-7005-4724-830e-f20d8d68ad76");
+        User user1FromDB = usersService.findById("cb609645-0e9a-4c2f-abeb-796d32807a90");
+        User user2FromDB = usersService.findById("3c2f3bcc-984c-403e-a486-32ad046e4fcb");
+
+        try {
+            reservationsService.saveNewReservation(LocalDate.now().plusDays(1), "88490bb2-e036-4da0-8246-333c09880da3", "cb609645-0e9a-4c2f-abeb-796d32807a90");
+            reservationsService.saveNewReservation(LocalDate.now().plusDays(2), "b607b34e-7005-4724-830e-f20d8d68ad76", "cb609645-0e9a-4c2f-abeb-796d32807a90");
+            reservationsService.saveNewReservation(LocalDate.now(), "b607b34e-7005-4724-830e-f20d8d68ad76", "3c2f3bcc-984c-403e-a486-32ad046e4fcb");
+        } catch (NotValidReservationException e) {
+            log.error((e.getMessage()));
+        }
+
+        try {
+            Reservation updatedReservation = new Reservation(LocalDate.now(), workspace1FromDB, user1FromDB);
+            reservationsService.findByIdAndUpdate("dcca5f46-8bbe-4249-a306-3641c0ba16f9", updatedReservation);
+        } catch (NotFoundException | NotValidReservationException | NotValidUpdateException e) {
+            log.error((e.getMessage()));
+        }
+
+        try { //USER WITH ANOTHER RESERVATION ON THE DAY AFTER TOMORROW TRYING TO CHANGE THE DATE OF RESERVATION
+            Reservation updatedReservation = new Reservation(LocalDate.now().plusDays(2), workspace1FromDB, user1FromDB);
+            reservationsService.findByIdAndUpdate("dcca5f46-8bbe-4249-a306-3641c0ba16f9", updatedReservation);
+        } catch (NotFoundException | NotValidReservationException | NotValidUpdateException e) {
+            log.error((e.getMessage()));
+        }
+
+
+        try { //USER TRYING TO CHANGE RESERVATION WORKSPACE BUT NEW WORKSPACE IS ALREADY BOOKED
+            Reservation updatedReservation = new Reservation(LocalDate.now(), workspace2FromDB, user1FromDB);
+            reservationsService.findByIdAndUpdate("dcca5f46-8bbe-4249-a306-3641c0ba16f9", updatedReservation);
+        } catch (NotFoundException | NotValidReservationException | NotValidUpdateException e) {
+            log.error((e.getMessage()));
+        }*/
+
+        // -- Test findByIdAndDelete
+        /*try {
+            reservationsService.findByIdAndDelete("25129e6b-22d1-4c40-bd7c-d6539b528078");
+            Reservation reservationNotInDB = reservationsService.findById("25129e6b-22d1-4c40-bd7c-d6539b528078");
+        } catch (NotFoundException e) {
+            log.error(e.getMessage());
+        }*/
 
 
     }

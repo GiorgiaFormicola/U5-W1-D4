@@ -2,6 +2,7 @@ package GiorgiaFormicola.U5_W1_D4.services;
 
 import GiorgiaFormicola.U5_W1_D4.entities.User;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUpdateException;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUserException;
 import GiorgiaFormicola.U5_W1_D4.repositories.UsersRepository;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,8 @@ public class UsersService {
 
     public void findByIdAndUpdate(String userId, User updatedUser) {
         User found = this.findById(userId);
+        if (found.getUsername().equals(updatedUser.getUsername()) && found.getName().equals(updatedUser.getName()) && found.getSurname().equals(updatedUser.getSurname()) && found.getEmail().equals(updatedUser.getEmail()))
+            throw new NotValidUpdateException("user");
         if (this.usersRepository.existsByEmail(updatedUser.getEmail()) && !updatedUser.getEmail().equals(found.getEmail()))
             throw new NotValidUserException("Email", updatedUser.getEmail());
         if (this.usersRepository.existsByUsername(updatedUser.getUsername()) && !updatedUser.getUsername().equals(found.getUsername()))

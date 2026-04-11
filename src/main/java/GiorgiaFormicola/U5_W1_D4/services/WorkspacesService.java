@@ -5,6 +5,7 @@ import GiorgiaFormicola.U5_W1_D4.entities.Workspace;
 import GiorgiaFormicola.U5_W1_D4.enums.WorkspaceType;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NoWorkspaceFoundException;
 import GiorgiaFormicola.U5_W1_D4.exceptions.NotFoundException;
+import GiorgiaFormicola.U5_W1_D4.exceptions.NotValidUpdateException;
 import GiorgiaFormicola.U5_W1_D4.repositories.WorkspacesRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,8 @@ public class WorkspacesService {
 
     public void findByIdAndUpdate(String workspaceId, Workspace updatedWorkspace) {
         Workspace found = this.findById(workspaceId);
+        if (found.getDescription().equals(updatedWorkspace.getDescription()) && found.getType().equals(updatedWorkspace.getType()) && found.getMaximumOccupants() == updatedWorkspace.getMaximumOccupants())
+            throw new NotValidUpdateException("workspace");
         found.setDescription(updatedWorkspace.getDescription());
         found.setType(updatedWorkspace.getType());
         found.setMaximumOccupants(updatedWorkspace.getMaximumOccupants());
