@@ -7,11 +7,13 @@ import GiorgiaFormicola.U5_W1_D4.services.WorkspacesService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
 @AllArgsConstructor
+@Order(2)
 public class TestRunner implements CommandLineRunner {
     private final UsersService usersService;
     private final BuildingsService buildingsService;
@@ -536,6 +538,7 @@ public class TestRunner implements CommandLineRunner {
             log.error(e.getMessage());
         }*/
 
+
         //TESTS USER BASIC INTERACTION WITH RESERVATIONS
         /*try {
             //User logs in by username
@@ -544,7 +547,7 @@ public class TestRunner implements CommandLineRunner {
 
             //User searches a workspace
             LocalDate searchDate = LocalDate.now().plusWeeks(1);
-            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.PRIVATE, 5, "Milano", searchDate);
+            List<Workspace> workspacesFound = workspacesService.filterByTypeAndMaximumOccupantsAndCityAndDate(WorkspaceType.OPEN_SPACE, 8, "Roma", searchDate);
             ;
             log.info("WORKSPACES FOUND: " + workspacesFound.size());
             workspacesFound.forEach(workspace -> log.info(String.valueOf(workspace)));
